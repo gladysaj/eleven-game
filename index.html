@@ -4,25 +4,28 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Eleven Game</title>
-    <link rel="stylesheet" href="styles.css"/>
-    <link rel="icon" type="image/png" href="glad-icon.ico"/>
+    <link rel="stylesheet" href="intro.css"/>
+    <link rel="icon" type="image/png" href="/images/glad-icon.ico"/>
   </head>
 
   <body>
     <div class="intro-container">
       <div>
-        <button class="play-icon" onclick="play()">Start</button>
+        <button class="play-icon" onclick="play()" id="start-button">Start</button>
+        <a href="home.html">
+          <button class="play-icon" id="home-button">Home</button>
+        </a>
       </div>
       <div>
-        <video class="video-intro"src="intro.mp4" muted id="video">
+        <video class="video-intro" src="media/intro.mp4" muted id="video">
           Tu navegador no implementa el elemento <code>video</code>.
         </video>
         <audio id="player">
-          <source src="intro.mp3" type="audio/mp3">
+          <source src="media/intro.mp3" type="audio/mp3">
         </audio>
       </div>
     </div>
 
-    <script src="game.js"></script>
+    <script src="intro.js"></script>
   </body>
   </html>
