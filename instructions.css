@@ -10,20 +10,29 @@ html, body {
   z-index: -1;
 }
 
-#instructions-text {
+.instructions {
   font-size: 35px;
   color: #fff;
   position: fixed;
   z-index: 1;
-  margin-top: 450px;
+  margin-top: 180px;
   margin-left: 450px;
 }
 
-#back-home {
+.instructions-text {
+  font-size: 35px;
+  color: #fff;
+  position: fixed;
+  z-index: 1;
+  margin-top: 250px;
+  margin-left: 450px;
+}
+
+#back-play {
   font-size: 35px;
   color: rgb(165, 49, 49);
   position: fixed;
   z-index: 1;
-  margin-top: 520px;
-  margin-left: 600px;
+  margin-top: 450px;
+  margin-left: 720px;
 }

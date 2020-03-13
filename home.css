@@ -11,7 +11,6 @@ html, body {
 }
 
 #instructions {
-  border: 5px solid #fff;
   color: white;
   border-radius: 15px;
   font-size: 35px;
@@ -22,7 +21,6 @@ html, body {
 }
 
 #play {
-  border: 5px solid #fff;
   color: white;
   border-radius: 15px;
   font-size: 35px;

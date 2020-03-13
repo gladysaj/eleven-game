@@ -9,7 +9,7 @@ class Background{
       this.width = canvas.width
       this.height = canvas.height
       this.imagen = new Image()
-      this.imagen.src = 'images/background.png'
+      this.imagen.src = 'images/Background copy.png'
   }
 
   draw(){
@@ -27,6 +27,7 @@ const background = new Background();
 function update() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   background.draw();
+  dustin.draw();
 
   if (requestId) {
     requestId = requestAnimationFrame(update);
@@ -39,11 +40,30 @@ function start() {
 
 start();
 
+// Add player 
 
-
-/* Event listener */
-/*addEventListener('keydown', function(event){
-  if(event.keyCode === 32){
-      marioPerez.y -= 80;
+class Dustin {
+  constructor(x, y, width, height) {
+    this.x = x;
+    this.y = y;
+    this.width = width;
+    this.height = height;
+    this.image1 = new Image();
+    this.image1.src = "images/PixelArt (7).png";
+    this.image2 = new Image();
+    this.image2.src = "images/PixelArt (6).png";
+    this.image = this.image1;
   }
-}) */
+
+  draw() {
+    if (this.y <= 212) this.y += 2;
+    if (frames % 10 === 0) {
+      this.image = this.image === this.image1 ? this.image2 : this.image1;
+    }
+    ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
+  }
+}
+
+const dustin = new Dustin(110, 460, 80, 100);
+
+
