@@ -1,6 +1,8 @@
+
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 let requestId;
+let enemies = [];
 
 class Background{
   constructor(){
@@ -22,17 +24,31 @@ class Background{
    ctx.drawImage(this.imagen,this.x + this.width,this.y,this.width,this.height); 
  }
 }
+
 const background = new Background();
 
 function update() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   background.draw();
   dustin.draw();
+  enemy.draw();
 
   if (requestId) {
     requestId = requestAnimationFrame(update);
   }
 }
+
+addEventListener("keydown", e => {
+  if (e.keyCode === 32) {
+    dustin.y -= 20;
+  }
+  if (e.keyCode === 39) {
+    dustin.x += 10;
+  }
+  if (e.keyCode === 37) {
+    dustin.x -= 20;
+  }
+});
 
 function start() {
   requestId = requestAnimationFrame(update);
@@ -50,8 +66,6 @@ class Dustin {
     this.height = height;
     this.image1 = new Image();
     this.image1.src = "images/PixelArt (7).png";
-    this.image2 = new Image();
-    this.image2.src = "images/PixelArt (6).png";
     this.image = this.image1;
   }
 
@@ -65,5 +79,25 @@ class Dustin {
 }
 
 const dustin = new Dustin(110, 460, 80, 100);
+
+//Add Demo-dogs
+
+class Enemy {
+  constructor() {
+    this.x = canvas.width;
+    this.y = 232;
+    this.width = 80;
+    this.height = 80;
+    this.image = new Image();
+    this.image.src = "images/PixelArt.png";
+  }
+
+  draw() {
+    if (frames % 10) this.x -= 5;
+    ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
+  }
+}
+
+const enemy = new Enemy();
 
 
