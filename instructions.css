@@ -36,3 +36,12 @@ html, body {
   margin-top: 450px;
   margin-left: 720px;
 }
+
+#back-home {
+  font-size: 35px;
+  color: rgb(165, 49, 49);
+  position: fixed;
+  z-index: 1;
+  margin-top: 550px;
+  margin-left: 1100px;
+}
