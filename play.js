@@ -3,6 +3,7 @@ const ctx = canvas.getContext('2d');
 let requestId;
 let enemies = [];
 let frames = 0;
+
 //Add background
 
 class Background {
@@ -13,6 +14,11 @@ class Background {
       this.height = canvas.height
       this.image = new Image()
       this.image.src = 'images/Background copy.png'
+  }
+
+  gameOver() {
+    ctx.font = "80px Avenir";
+    ctx.fillText("Game Over", 250, 200);
   }
 
   draw() {
@@ -39,20 +45,16 @@ class Dustin {
     this.image1 = new Image();
     this.image1.src = "images/PixelArt (7).png";
     this.image = this.image1;
-    // this.image2 = new Image();
-    // this.image2.src = "https://bit.ly/2L3ikoe";
-    // this.image = this.image1;
   }
 
-//verify
-  // collision(item) {
-  //   return (
-  //     this.x < item.x + item.width &&
-  //     this.x + this.width > item.x &&
-  //     this.y < item.y + item.height &&
-  //     this.y + this.height > item.y
-  //   );
-  // }
+  collision(item) {
+    return (
+      this.x < item.x + item.width &&
+      this.x + this.width > item.x &&
+      this.y < item.y + item.height &&
+      this.y + this.height > item.y
+    );
+  }
 
   draw() {
     if (this.y <= 212) this.y += 2;
@@ -63,9 +65,9 @@ class Dustin {
   }
 }
 
-// Add Demo-dogs
+// Add Demodogs
 
-class Enemy {
+class Demodogs {
   constructor() {
     this.x = canvas.width;
     this.y = 490;
@@ -77,21 +79,19 @@ class Enemy {
 
   draw() {
     if (frames % 10) {
-      this.x -= 5;
+      this.x -= 4;
     } 
     ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
   }
 }
 
 const dustin = new Dustin(110, 460, 80, 100);
-const enemy = new Enemy();
+const enemy = new Demodogs();
 const background = new Background();
 
 function generateEnemies() {
   if (frames % 100 == 0 || frames % 60 == 0 || frames % 170 == 0) {
-    console.log(frames)
-
-    const enemy = new Enemy();
+    const enemy = new Demodogs();
     enemies = [...enemies, enemy];
   }
 }
@@ -99,9 +99,9 @@ function generateEnemies() {
 function drawingEnemies() {
   enemies.forEach(enemy => {
     enemy.draw();
-    // if (mario.collision(enemy)) {
-    //   stop();
-    // }
+    if (dustin.collision(enemy)) {
+      stop();
+    }
   });
 }
 
@@ -122,10 +122,10 @@ function update() {
 
 addEventListener("keydown", e => {
   if (e.keyCode === 32) {
-    dustin.y -= 20;
+    dustin.y -= 50;
   }
   if (e.keyCode === 39) {
-    dustin.x += 10;
+    dustin.x += 20;
   }
   if (e.keyCode === 37) {
     dustin.x -= 20;
@@ -134,6 +134,11 @@ addEventListener("keydown", e => {
 
 function start() {
   requestId = requestAnimationFrame(update);
+}
+
+function stop() {
+  background.gameOver();
+  requestId = undefined;
 }
 
 start();
