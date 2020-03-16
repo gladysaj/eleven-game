@@ -70,9 +70,9 @@ class Dustin {
     );
   }
 
-  // rise() {
-  //   this.y -= 30;
-  // }
+  rise() {
+    this.y -= 30;
+  }
 
   draw() {
     // if (this.y <= 212) this.y += 2;
@@ -157,13 +157,14 @@ function gameOver() {
   button.disabled = false;
   button.onclick = restart;
   requestId = undefined;
+  ctx.fillText("Game Over", 350, 115,);
   ctx.font = "100px Courier New";
   ctx.fillStyle = "red";
   ctx.textAlign = "start";
-  ctx.fillText("Game Over", 350, 115,);
 }
 
 function restart() {
+  enemies = [];
   dustin.y = 40;
   audio.currentTime = 0;
   start();
@@ -174,9 +175,9 @@ start();
 // Move player
 
 document.onkeydown = function(e) {
-  if (e.keyCode === 82) {
-    restart();
-  }
+  // if (e.keyCode === 82) {
+  //   restart();
+  // }
   if (e.keyCode == 32) {
     dustin.userPull = 0.3;
   }
