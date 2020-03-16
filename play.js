@@ -3,7 +3,22 @@ const ctx = canvas.getContext('2d');
 let requestId;
 let enemies = [];
 let frames = 0;
+const gravity = 0.1;
+const button = document.querySelector("button");
 
+//Add audio to game
+
+const audio = new Audio();
+audio.src = "media/game.mp3";
+audio.loop = true;
+
+ctx.font = "30px Avenir";
+
+function start() {
+  button.disabled = true;
+  audio.play();
+  requestId = requestAnimationFrame(update);
+}
 //Add background
 
 class Background {
@@ -16,21 +31,17 @@ class Background {
       this.image.src = 'images/Background copy.png'
   }
 
-  gameOver() {
-    ctx.font = "80px Avenir";
-    ctx.fillText("Game Over", 250, 200);
-  }
-
   draw() {
+    if (this.x < -canvas.width) this.x = 0;
     // restamos en x para moverlo
     this.x--;
     // en caso de alcanzar el final de la imagen reseteamos x
     if (this.x < -canvas.width) {
       this.x = 0;
     }
-    ctx.drawImage(this.image,this.x,this.y,this.width,this.height); 
+    ctx.drawImage(this.image, this.x, this.y, this.width, this.height); 
     // dibujamos una segunda imagen al final de la primera
-    ctx.drawImage(this.image,this.x + canvas.width, this.y,this.width,this.height); 
+    ctx.drawImage(this.image, this.x + canvas.width, this.y, this.width, this.height); 
   }
 }
 
@@ -40,12 +51,15 @@ class Dustin {
   constructor(x, y, width, height) {
     this.x = x;
     this.y = y;
+    this.vy = 2;
+    this.userPull = 0;
     this.width = width;
     this.height = height;
-    this.image1 = new Image();
-    this.image1.src = "images/PixelArt (7).png";
-    this.image = this.image1;
+    this.image = new Image();
+    this.image.src = "images/PixelArt (7).png";
   }
+
+  //Add collision
 
   collision(item) {
     return (
@@ -56,11 +70,18 @@ class Dustin {
     );
   }
 
+  // rise() {
+  //   this.y -= 30;
+  // }
+
   draw() {
-    if (this.y <= 212) this.y += 2;
-    // if (frames % 10 === 0) {
-    //   this.image = this.image === this.image1 ? this.image2 : this.image1;
-    // }
+    // if (this.y <= 212) this.y += 2;
+    this.vy = this.vy + (gravity - this.userPull);
+    if (this.y + this.height < canvas.height) {
+      this.y += this.vy; 
+    } else {
+      gameOver();
+    }
     ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
   }
 }
@@ -112,33 +133,61 @@ function update() {
   dustin.draw();
   generateEnemies();
   drawingEnemies();
- 
+  if (!requestId) gameOver();
   if (requestId) {
     requestId = requestAnimationFrame(update);
   }
 }
 
-// Move player
-
-addEventListener("keydown", e => {
-  if (e.keyCode === 32) {
-    dustin.y -= 50;
-  }
-  if (e.keyCode === 39) {
-    dustin.x += 20;
-  }
-  if (e.keyCode === 37) {
-    dustin.x -= 20;
-  }
-});
-
 function start() {
+  button.disabled = true;
+  audio.play();
   requestId = requestAnimationFrame(update);
 }
 
-function stop() {
-  background.gameOver();
+// function stop() {
+//   background.gameOver();
+//   requestId = undefined;
+// }
+
+//Game over
+
+function gameOver() {
+  audio.pause();
+  button.disabled = false;
+  button.onclick = restart;
   requestId = undefined;
+  ctx.font = "100px Courier New";
+  ctx.fillStyle = "red";
+  ctx.textAlign = "start";
+  ctx.fillText("Game Over", 350, 115,);
+}
+
+function restart() {
+  dustin.y = 40;
+  audio.currentTime = 0;
+  start();
 }
 
 start();
+
+// Move player
+
+document.onkeydown = function(e) {
+  if (e.keyCode === 82) {
+    restart();
+  }
+  if (e.keyCode == 32) {
+    dustin.userPull = 0.3;
+  }
+};
+
+document.onkeyup = function(e) {
+  if (e.keyCode == 32) {
+    dustin.userPull = 0;
+  }
+};
+
+button.onclick = start;
+
+
