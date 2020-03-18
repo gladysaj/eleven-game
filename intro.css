@@ -16,10 +16,22 @@ html, body {
   border: 5px solid rgb(146, 16, 16);
   border-radius: 15px;
   font-size: 35px;
+  font-family: "Courier New";
   position: fixed;
   z-index: 1;
   margin-top: 50px;
-  margin-left: 550px;
+  margin-left: 555px;
+}
+
+.play-icon2 {
+  border: 5px solid rgb(146, 16, 16);
+  border-radius: 15px;
+  font-size: 35px;
+  font-family: "Courier New";
+  position: fixed;
+  z-index: 1;
+  margin-top: 50px;
+  margin-left: 525px;
 }
 
 #home-button {

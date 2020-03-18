@@ -12,24 +12,27 @@ html, body {
 
 .instructions {
   font-size: 35px;
+  font-family: "Courier New";
   color: #fff;
   position: fixed;
   z-index: 1;
   margin-top: 180px;
-  margin-left: 450px;
+  margin-left: 430px;
 }
 
 .instructions-text {
-  font-size: 35px;
+  font-size: 30px;
+  font-family: "Courier New";
   color: #fff;
   position: fixed;
   z-index: 1;
   margin-top: 250px;
-  margin-left: 450px;
+  margin-left: 430px;
 }
 
 #back-play {
-  font-size: 35px;
+  font-size: 33px;
+  font-family: "Courier New";
   color: rgb(165, 49, 49);
   position: fixed;
   z-index: 1;
@@ -38,7 +41,8 @@ html, body {
 }
 
 #back-home {
-  font-size: 35px;
+  font-size: 33px;
+  font-family: "Courier New";
   color: rgb(165, 49, 49);
   position: fixed;
   z-index: 1;

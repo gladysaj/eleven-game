@@ -12,8 +12,6 @@ const audio = new Audio();
 audio.src = "media/game.mp3";
 audio.loop = true;
 
-ctx.font = "30px Avenir";
-
 function start() {
   button.disabled = true;
   audio.play();
@@ -70,15 +68,13 @@ class Dustin {
     );
   }
 
-  rise() {
-    this.y -= 30;
-  }
-
   draw() {
     // if (this.y <= 212) this.y += 2;
     this.vy = this.vy + (gravity - this.userPull);
     if (this.y + this.height < canvas.height) {
-      this.y += this.vy; 
+      
+      // if (this.y < 500) this.y += this.vy
+
     } else {
       gameOver();
     }
@@ -99,14 +95,14 @@ class Demodogs {
   }
 
   draw() {
-    if (frames % 10) {
+    if (frames % 15) {
       this.x -= 4;
     } 
     ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
   }
 }
 
-const dustin = new Dustin(110, 460, 80, 100);
+const dustin = new Dustin(120, 510, 77, 92);
 const enemy = new Demodogs();
 const background = new Background();
 
@@ -157,10 +153,10 @@ function gameOver() {
   button.disabled = false;
   button.onclick = restart;
   requestId = undefined;
-  ctx.fillText("Game Over", 350, 115,);
   ctx.font = "100px Courier New";
   ctx.fillStyle = "red";
   ctx.textAlign = "start";
+  ctx.fillText("Game Over", 350, 115,);
 }
 
 function restart() {
@@ -175,9 +171,9 @@ start();
 // Move player
 
 document.onkeydown = function(e) {
-  // if (e.keyCode === 82) {
-  //   restart();
-  // }
+  if (e.keyCode === 82) {
+    restart();
+  }
   if (e.keyCode == 32) {
     dustin.userPull = 0.3;
   }

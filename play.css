@@ -5,9 +5,11 @@ html, body {
 
 #ready-button  {
   position: absolute;
-  top: 70%;
+  top: 65%;
   left: calc(8%);
-  font-size: 15px;
+  font-size: 18px;
+  font-weight: bold;
+  font-family: "Courier New";
   border: groove 1em red;  
   border-radius: 2em;
 }
