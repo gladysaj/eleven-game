@@ -1,31 +1,25 @@
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
-let requestId;
-let enemies = [];
-let frames = 0;
-const gravity = 0.1;
 const button = document.querySelector("button");
+let frames = 0;
+let gravity = 0.1;
+let enemies = [];
+let eggoCoins = [];
+let requestId;
 
-//Add audio to game
-
+// Add audio to game
 const audio = new Audio();
 audio.src = "media/game.mp3";
 audio.loop = true;
 
-function start() {
-  button.disabled = true;
-  audio.play();
-  requestId = requestAnimationFrame(update);
-}
-//Add background
-
+// Add background
 class Background {
   constructor() {
-      this.x = 0
-      this.y = 0
-      this.width = canvas.width
-      this.height = canvas.height
-      this.image = new Image()
+      this.x = 0;
+      this.y = 0;
+      this.width = canvas.width;
+      this.height = canvas.height;
+      this.image = new Image();
       this.image.src = 'images/Background copy.png'
   }
 
@@ -34,9 +28,9 @@ class Background {
     // restamos en x para moverlo
     this.x--;
     // en caso de alcanzar el final de la imagen reseteamos x
-    if (this.x < -canvas.width) {
-      this.x = 0;
-    }
+    // if (this.x < -canvas.width) {
+    //   this.x = 0;
+    // }
     ctx.drawImage(this.image, this.x, this.y, this.width, this.height); 
     // dibujamos una segunda imagen al final de la primera
     ctx.drawImage(this.image, this.x + canvas.width, this.y, this.width, this.height); 
@@ -44,7 +38,6 @@ class Background {
 }
 
 // Add player 
-
 class Dustin {
   constructor(x, y, width, height) {
     this.x = x;
@@ -58,7 +51,6 @@ class Dustin {
   }
 
   //Add collision
-
   collision(item) {
     return (
       this.x < item.x + item.width &&
@@ -83,7 +75,6 @@ class Dustin {
 }
 
 // Add Demodogs
-
 class Demodogs {
   constructor() {
     this.x = canvas.width;
@@ -129,6 +120,8 @@ function update() {
   dustin.draw();
   generateEnemies();
   drawingEnemies();
+  generateCoins();
+  drawingCoins();
   if (!requestId) gameOver();
   if (requestId) {
     requestId = requestAnimationFrame(update);
@@ -146,8 +139,13 @@ function start() {
 //   requestId = undefined;
 // }
 
-//Game over
+function start() {
+  button.disabled = true;
+  audio.play();
+  requestId = requestAnimationFrame(update);
+}
 
+//Game over
 function gameOver() {
   audio.pause();
   button.disabled = false;
@@ -169,7 +167,6 @@ function restart() {
 start();
 
 // Move player
-
 document.onkeydown = function(e) {
   if (e.keyCode === 82) {
     restart();
@@ -187,4 +184,36 @@ document.onkeyup = function(e) {
 
 button.onclick = start;
 
+// Add Eggo coins
+class Eggos {
+  constructor() {
+    this.x = canvas.width;
+    this.y = 270;
+    this.width = 60;
+    this.height = 60;
+    this.image = new Image();
+    this.image.src = "images/STGame-Eggo.png";
+  }
 
+  draw() {
+    if (frames % 15) {
+      this.x -= 4;
+    } 
+    ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
+  }
+}
+
+const coins = new Eggos();
+
+function generateCoins() {
+  if (frames % 100 == 0 || frames % 60 == 0 || frames % 170 == 0) {
+    const coins = new Eggos();
+    eggoCoins = [...eggoCoins, coins];
+  }
+}
+
+function drawingCoins() {
+  eggoCoins.forEach(coins=> {
+    coins.draw();
+  });
+}
