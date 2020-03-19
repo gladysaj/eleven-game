@@ -23,6 +23,11 @@ class Background {
       this.image.src = 'images/Background copy.png'
   }
 
+  // gameOver() {
+  //   ctx.font = "80px Avenir";
+  //   ctx.fillText("Game Over", 250, 200);
+  // }
+
   draw() {
     if (this.x < -canvas.width) this.x = 0;
     // restamos en x para moverlo
@@ -63,13 +68,11 @@ class Dustin {
   draw() {
     // if (this.y <= 212) this.y += 2;
     this.vy = this.vy + (gravity - this.userPull);
-    if (this.y + this.height < canvas.height) {
-      
-      // if (this.y < 500) this.y += this.vy
-
-    } else {
-      gameOver();
-    }
+    // if (this.y + this.height < canvas.height) {
+      if (this.y < 500) this.y += this.vy
+    // } else {
+    //   gameOver();
+    // }
     ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
   }
 }
@@ -134,10 +137,10 @@ function start() {
   requestId = requestAnimationFrame(update);
 }
 
-// function stop() {
-//   background.gameOver();
-//   requestId = undefined;
-// }
+function stop() {
+  background.gameOver();
+  requestId = undefined;
+}
 
 function start() {
   button.disabled = true;
@@ -166,19 +169,11 @@ function restart() {
 
 start();
 
-// Move player
-document.onkeydown = function(e) {
-  if (e.keyCode === 82) {
-    restart();
-  }
-  if (e.keyCode == 32) {
-    dustin.userPull = 0.3;
-  }
-};
+// Move player with spacebar
 
 document.onkeyup = function(e) {
   if (e.keyCode == 32) {
-    dustin.userPull = 0;
+    dustin.userPull = 0.5;
   }
 };
 
@@ -196,8 +191,8 @@ class Eggos {
   }
 
   draw() {
-    if (frames % 15) {
-      this.x -= 4;
+    if (frames % 10) {
+      this.x -= 7;
     } 
     ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
   }
@@ -206,7 +201,7 @@ class Eggos {
 const coins = new Eggos();
 
 function generateCoins() {
-  if (frames % 100 == 0 || frames % 60 == 0 || frames % 170 == 0) {
+  if (frames % 110 == 0 || frames % 60 == 0) {
     const coins = new Eggos();
     eggoCoins = [...eggoCoins, coins];
   }
