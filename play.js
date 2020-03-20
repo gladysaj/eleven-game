@@ -6,6 +6,7 @@ let gravity = 0.1;
 let enemies = [];
 let eggoCoins = [];
 let requestId;
+let score = 0;
 
 // Add audio to game
 const audio = new Audio();
@@ -23,21 +24,12 @@ class Background {
       this.image.src = 'images/Background copy.png'
   }
 
-  // gameOver() {
-  //   ctx.font = "80px Avenir";
-  //   ctx.fillText("Game Over", 250, 200);
-  // }
+  gameOver() {}
 
   draw() {
     if (this.x < -canvas.width) this.x = 0;
-    // restamos en x para moverlo
     this.x--;
-    // en caso de alcanzar el final de la imagen reseteamos x
-    // if (this.x < -canvas.width) {
-    //   this.x = 0;
-    // }
     ctx.drawImage(this.image, this.x, this.y, this.width, this.height); 
-    // dibujamos una segunda imagen al final de la primera
     ctx.drawImage(this.image, this.x + canvas.width, this.y, this.width, this.height); 
   }
 }
@@ -65,14 +57,16 @@ class Dustin {
     );
   }
 
+  // Add the score after collision
+  drawScore() {
+    ctx.font = "16px Courier New";
+    ctx.fillStyle = "#0095DD";
+    ctx.fillText("Score: "+score, 8, 20);
+    
+}
+
   draw() {
-    // if (this.y <= 212) this.y += 2;
-    this.vy = this.vy + (gravity - this.userPull);
-    // if (this.y + this.height < canvas.height) {
-      if (this.y < 500) this.y += this.vy
-    // } else {
-    //   gameOver();
-    // }
+    if (this.y <= 200) this.y += 3;
     ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
   }
 }
@@ -89,7 +83,7 @@ class Demodogs {
   }
 
   draw() {
-    if (frames % 15) {
+    if (frames % 7) {
       this.x -= 4;
     } 
     ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
@@ -131,17 +125,7 @@ function update() {
   }
 }
 
-function start() {
-  button.disabled = true;
-  audio.play();
-  requestId = requestAnimationFrame(update);
-}
-
-function stop() {
-  background.gameOver();
-  requestId = undefined;
-}
-
+// Ready button
 function start() {
   button.disabled = true;
   audio.play();
@@ -162,34 +146,40 @@ function gameOver() {
 
 function restart() {
   enemies = [];
-  dustin.y = 40;
+  dustin.y = 30;
   audio.currentTime = 0;
   start();
 }
 
+function stop() {
+  background.gameOver();
+  requestId = undefined;
+}
+
+
+
 start();
 
 // Move player with spacebar
-
 addEventListener("keydown", e => {
   if (e.keyCode === 32) {
-    dustin.y -= 60;
-  }
-  if (e.keyCode === 39) {
-    dustin.x += 20;
-  }
-  if (e.keyCode === 37) {
-    dustin.x -= 20;
+    dustin.y -= 10;
   }
 });
 
+// Move player with spacebar
+// When user presses key
+// document.onkeydown = function(e) {
+//   if (e.keyCode === 32) {
+//      dustin.userPull = 0.3;
+//   }
+
+//   //When user release key
 // document.onkeyup = function(e) {
-//   if (e.keyCode == 32) {
-//     dustin.userPull = 0.5;
+//   if (e.keyCode === 32) {
+//     dustin.userPull = 0;
 //   }
 // };
-
-// button.onclick = start;
 
 // Add Eggo coins
 class Eggos {
@@ -203,7 +193,7 @@ class Eggos {
   }
 
   draw() {
-    if (frames % 10) {
+    if (frames % 7) {
       this.x -= 7;
     } 
     ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
@@ -220,7 +210,9 @@ function generateCoins() {
 }
 
 function drawingCoins() {
-  eggoCoins.forEach(coins=> {
+  eggoCoins.forEach(coins => {
     coins.draw();
   });
 }
+
+// Add Score
