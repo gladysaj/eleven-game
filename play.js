@@ -171,13 +171,25 @@ start();
 
 // Move player with spacebar
 
-document.onkeyup = function(e) {
-  if (e.keyCode == 32) {
-    dustin.userPull = 0.5;
+addEventListener("keydown", e => {
+  if (e.keyCode === 32) {
+    dustin.y -= 60;
   }
-};
+  if (e.keyCode === 39) {
+    dustin.x += 20;
+  }
+  if (e.keyCode === 37) {
+    dustin.x -= 20;
+  }
+});
 
-button.onclick = start;
+// document.onkeyup = function(e) {
+//   if (e.keyCode == 32) {
+//     dustin.userPull = 0.5;
+//   }
+// };
+
+// button.onclick = start;
 
 // Add Eggo coins
 class Eggos {
