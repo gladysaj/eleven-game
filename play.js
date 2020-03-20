@@ -23,10 +23,6 @@ class Background {
       this.image.src = 'images/Background copy.png'
   }
 
-  // gameOver() {
-  //   ctx.font = "80px Avenir";
-  //   ctx.fillText("Game Over", 250, 200);
-  // }
 
   draw() {
     if (this.x < -canvas.width) this.x = 0;
@@ -142,23 +138,29 @@ function stop() {
   requestId = undefined;
 }
 
+  ctx.font = "100px Courier New";
+  ctx.fillStyle = "red";
+  ctx.textAlign = "start";
+  ctx.fillText("Game Over", 350, 115,);
+  console.log(stop)
+
 function start() {
   button.disabled = true;
   audio.play();
   requestId = requestAnimationFrame(update);
 }
 
-//Game over
-function gameOver() {
-  audio.pause();
-  button.disabled = false;
-  button.onclick = restart;
-  requestId = undefined;
-  ctx.font = "100px Courier New";
-  ctx.fillStyle = "red";
-  ctx.textAlign = "start";
-  ctx.fillText("Game Over", 350, 115,);
-}
+// //Game over
+// function gameOver() {
+//   audio.pause();
+//   button.disabled = false;
+//   button.onclick = restart;
+//   requestId = undefined;
+//   ctx.font = "100px Courier New";
+//   ctx.fillStyle = "red";
+//   ctx.textAlign = "start";
+//   ctx.fillText("Game Over", 350, 115,);
+// }
 
 function restart() {
   enemies = [];
@@ -170,14 +172,25 @@ function restart() {
 start();
 
 // Move player with spacebar
-
-document.onkeyup = function(e) {
-  if (e.keyCode == 32) {
-    dustin.userPull = 0.5;
+addEventListener("keydown", e => {
+  if (e.keyCode === 32) {
+    dustin.y -= 50;
   }
-};
+  if (e.keyCode === 39) {
+    dustin.x += 20;
+  }
+  if (e.keyCode === 37) {
+    dustin.x -= 20;
+  }
+});
 
-button.onclick = start;
+// document.onkeyup = function(e) {
+//   if (e.keyCode == 32) {
+//     dustin.userPull = 0.5;
+//   }
+// };
+
+// button.onclick = start;
 
 // Add Eggo coins
 class Eggos {
@@ -212,3 +225,8 @@ function drawingCoins() {
     coins.draw();
   });
 }
+
+// gameOver() {
+//   ctx.font = "80px Avenir";
+//   ctx.fillText("Game Over", 250, 200);
+// }
